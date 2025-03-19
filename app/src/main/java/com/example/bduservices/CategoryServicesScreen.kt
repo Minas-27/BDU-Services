@@ -8,7 +8,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.*import androidx.compose.runtime.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -67,8 +68,8 @@ fun CategoryServicesScreen(
                     ServiceItem(
                         service = service,
                         onServiceSelected = onServiceSelected,
-                        isFavorite = favorites.contains(service.id), // Pass isFavorite
-                        onFavoriteToggled = { favoritesViewModel.toggleFavorite(service.id) } // Pass the toggle function
+                        isFavorite = favorites.contains(service.id),
+                        onFavoriteToggled = { favoritesViewModel.toggleFavorite(service.id) }
                     )
                 }
             }
@@ -83,6 +84,8 @@ private fun ServiceItem(
     isFavorite: Boolean,
     onFavoriteToggled: () -> Unit
 ) {
+    var isCurrentlyFavorite by remember { mutableStateOf(isFavorite) }
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -103,12 +106,15 @@ private fun ServiceItem(
                 Text(text = "Price: ${service.price} ብር", fontSize = 14.sp)
             }
             IconButton(
-                onClick = onFavoriteToggled // Call the toggle function
+                onClick = {
+                    isCurrentlyFavorite = !isCurrentlyFavorite
+                    onFavoriteToggled()
+                }
             ) {
                 Icon(
-                    imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                    imageVector = if (isCurrentlyFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
                     contentDescription = "Favorite",
-                    tint = if (isFavorite) Color.Red else Color.Gray
+                    tint = if (isCurrentlyFavorite) Color.Red else Color.Gray
                 )
             }
         }

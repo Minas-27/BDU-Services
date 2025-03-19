@@ -33,7 +33,7 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
             } else {
                 val service = ServiceData.categories.flatMap { it.services }.find { it.id == serviceId }
                 if (service != null) {
-                    val newFavorite= Favorite(service.id, service.name, service.price)
+                    val newFavorite = Favorite(service.id, service.name, service.price)
                     favoriteRepository.addFavorite(newFavorite)
                 }
             }
@@ -52,7 +52,7 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
         return favoriteRepository.getServiceName(serviceId)
     }
 
-    private suspend fun updateFavoritesSet() {
+    private fun updateFavoritesSet() {
         val currentFavorites = allFavorites.value?.map { it.serviceId }?.toSet() ?: emptySet()
         _favorites.value = currentFavorites
     }
