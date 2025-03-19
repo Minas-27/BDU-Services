@@ -11,65 +11,77 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun FavoritesScreen(favoritesViewModel: FavoritesViewModel) {
-    val favorites by favoritesViewModel.allFavorites.observeAsState(emptyList())
-    val favoriteServiceIds by favoritesViewModel.favorites.observeAsState(emptySet())
+fun FavoritesScreen(
+    viewModel: FavoritesViewModel = viewModel(
+        factory = FavoritesViewModelFactory(LocalContext.current)
+    )
+) {
+    // Observe allFavorites instead of favoriteServices
+    val allFavorites by viewModel.allFavorites.observeAsState(emptyList())
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        if (favorites.isEmpty()) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "No favorites yet!",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+    if (allFavorites.isEmpty()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text("No favorites yet!")
+        }
+    } else {
+        val spacing = if (allFavorites.size > 5) 4.dp else 8.dp
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(spacing)
+        ) {
+            items(allFavorites, key = { it.serviceId }) { favorite ->
+                FavoriteItem(
+                    favorite = favorite,
+                    onRemove = { viewModel.removeFavorite(favorite.serviceId) }
                 )
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(favorites, key = { it.serviceId }) { favorite ->
-                    FavoriteItem(
-                        favorite = favorite,
-                        onToggleFavorite = { favoritesViewModel.toggleFavorite(favorite.serviceId) }
-                    )
-                }
             }
         }
     }
 }
 
+
 @Composable
-private fun FavoriteItem(
+fun FavoriteItem(
     favorite: Favorite,
-    onToggleFavorite: () -> Unit
+    onRemove: () -> Unit
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(4.dp)
+            .fillMaxWidth()
+            .padding(8.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = favorite.serviceName, fontSize = 16.sp)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Price: ${favorite.servicePrice} ብር", fontSize = 14.sp)
-            IconButton(
-                onClick = onToggleFavorite
-            ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = favorite.serviceName,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = "Price: ${favorite.servicePrice} ብር",
+                    fontSize = 14.sp,
+                    color = Color.Gray
+                )
+            }
+            IconButton(onClick = onRemove) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
-                    contentDescription = "Favorite"
+                    contentDescription = "Remove Favorite",
+                    tint = Color.Gray
                 )
             }
         }

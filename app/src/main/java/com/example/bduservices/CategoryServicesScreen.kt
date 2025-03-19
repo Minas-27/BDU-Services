@@ -8,12 +8,12 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.*import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -22,7 +22,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun CategoryServicesScreen(
     categoryId: Int,
     onServiceSelected: (String) -> Unit,
-    favoritesViewModel: FavoritesViewModel = viewModel()
+    favoritesViewModel: FavoritesViewModel = viewModel(
+        factory = FavoritesViewModelFactory(LocalContext.current)
+    )
 ) {
     val category = ServiceData.categories.find { it.id == categoryId }
 
@@ -78,8 +80,8 @@ fun CategoryServicesScreen(
 private fun ServiceItem(
     service: Service,
     onServiceSelected: (String) -> Unit,
-    isFavorite: Boolean, // Pass the favorite state
-    onFavoriteToggled: () -> Unit // Pass the toggle function
+    isFavorite: Boolean,
+    onFavoriteToggled: () -> Unit
 ) {
     Card(
         modifier = Modifier

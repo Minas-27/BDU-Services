@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CategoryListScreen(onCategorySelected: (Int) -> Unit) { // Now uses ID
+fun CategoryListScreen(onCategorySelected: (Int) -> Unit) {
     var searchQuery by remember { mutableStateOf("") }
     val categories = ServiceData.categories
 
@@ -37,7 +37,7 @@ fun CategoryListScreen(onCategorySelected: (Int) -> Unit) { // Now uses ID
             columns = GridCells.Fixed(2),
             contentPadding = PaddingValues(16.dp)
         ) {
-            items(filteredCategories, key = { it.id }) { // Use ID as key
+            items(filteredCategories, key = { it.id }) {
                 CategoryItem(category = it, onCategorySelected = onCategorySelected)
             }
         }
@@ -53,7 +53,7 @@ private fun CategoryItem(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .clickable { onCategorySelected(category.id) }, // Pass ID
+            .clickable { onCategorySelected(category.id) },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(

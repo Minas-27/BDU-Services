@@ -47,6 +47,11 @@ fun AppBarView(
                 }
             }
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = colorResource(id = mine))
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = colorResource(id = mine),
+            titleContentColor = Color.White,
+            navigationIconContentColor = Color.White,
+            actionIconContentColor = Color.White
+        )
     )
 }

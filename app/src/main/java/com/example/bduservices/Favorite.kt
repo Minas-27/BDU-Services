@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Favorite(
-    @PrimaryKey val serviceId: Int, // serviceId is now the primary key
+    @PrimaryKey val serviceId: Int,
     val serviceName: String,
     val servicePrice: Int
 )
