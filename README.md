@@ -43,8 +43,7 @@ Welcome to the **BDU Services App**! This app is designed to provide a seamless 
 
 | Home Screen | Categories Screen | Service Details | Favorites Screen | About Screen |
 |-------------|-------------------|-----------------|------------------|--------------|
-| ![Home Screen](https://github.com/user-attachments/assets/2a754f72-164d-4176-8019-530aa63b4a44) | ![Categories Screen](https://github.com/user-attachments/assets/6e33ff3b-04c9-43d6-98b1-bb3c213b9b7e) | ![Service Details](https://github.com/user-attachments/assets/eaf5f42c-39b2-454b-811a-aed157804d2d) |![Favorites Screen](https://github.com/user-attachments/assets/336f9bac-d16d-4a16-9ca8-05feb0760801) | ![About Screen](https://github.com/user-attachments/assets/75e41a16-6283-4a18-9d40-8a1385386cf0)
- |
+| ![Home Screen](https://github.com/user-attachments/assets/2a754f72-164d-4176-8019-530aa63b4a44) | ![Categories Screen](https://github.com/user-attachments/assets/6e33ff3b-04c9-43d6-98b1-bb3c213b9b7e) | ![Service Details](https://github.com/user-attachments/assets/eaf5f42c-39b2-454b-811a-aed157804d2d) |![Favorites Screen](https://github.com/user-attachments/assets/8ef2f18a-648e-4da7-9ca1-be86617488e2) | ![About Screen](https://github.com/user-attachments/assets/75e41a16-6283-4a18-9d40-8a1385386cf0) |
 
 ---
 
